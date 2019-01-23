@@ -1,3 +1,13 @@
+# Other
+.vscode/
+db_organization/
+img/
+imgcollection/
+pullemoji/
+unused/
+config.py
+emoji.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
