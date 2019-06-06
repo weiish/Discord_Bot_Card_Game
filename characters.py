@@ -16,16 +16,25 @@ class Characters:
     @commands.command(pass_context=True, aliases=['c'])
     async def character(self, ctx, *argv):
         if len(argv) > 1:
-            #Check if last argument is an integer
+            #Check if last two arguments are integers
             allArgs = argv
             try:
-                index = int(allArgs[-1])
+                index = int(allArgs[-2])
+                picIndex = int(allArgs[-1])
+                allArgs = " ".join(argv[:-2])
             except ValueError:
-                index = -1
-            allArgs = " ".join(argv[:-1])
+                picIndex = 1
+                try:
+                    index = int(allArgs[-1])
+                    allArgs = " ".join(argv[:-1])
+                except ValueError:
+                    index = -1
+                    picIndex = 1
         else:
             index = -1
+            picIndex = 1
             allArgs = argv[0]
+        print(allArgs)
         cs = self.get_character(allArgs)
         outputString = ""
         if cs:
@@ -49,7 +58,7 @@ class Characters:
                         await self.client.say(outputString)
                         destinationFolder = r'F:\Anime Character Images'
                         writeFolderPath = os.path.join(destinationFolder, str(c.id))
-                        fileName = str(c.id) + "_" + str(1) + ".png"
+                        fileName = str(c.id) + "_" + str(picIndex) + ".png"
                         fullFilePath = os.path.join(writeFolderPath,fileName)
                         tempCard = images.generate_card_img(3, 0, c.name, 0, 0, 0, 0, fullFilePath, 0)                        
                         await self.client.send_file(ctx.message.channel, tempCard.name)

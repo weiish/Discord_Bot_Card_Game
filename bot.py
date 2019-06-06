@@ -5,7 +5,7 @@ import os
 import config
 from discord.ext import commands
 
-client = commands.Bot(command_prefix = '$')
+client = commands.Bot(command_prefix = '!')
 os.chdir(config.localfolder)
 
 @client.event
@@ -16,7 +16,7 @@ async def on_reaction_add(reaction, user):
 @client.event
 async def on_ready():
     print('Bot is ready.')
-    await client.change_presence(game=discord.Game(name='$help'),status=discord.Status.online)
+    await client.change_presence(game=discord.Game(name='!help'),status=discord.Status.online)
 
 @client.command(pass_context=True, aliases=['lo'])
 async def logout(ctx):

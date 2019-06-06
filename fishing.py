@@ -11,9 +11,9 @@ class Fishing:
         self.sql = client.cogs['SQL']
         self.player = client.cogs['Player']
         self.cards = client.cogs['Cards']
-        self.loaded_emojis = False
-        #with open('emoji.json', 'r') as in_f:
-        #    self.emojis = json.load(in_f)
+        self.loaded_emojis = True
+        with open('emoji.json', 'r') as in_f:
+            self.emojis = json.load(in_f)
         
     async def load_emojis(self):
         emojis = self.client.get_all_emojis()
@@ -32,7 +32,7 @@ class Fishing:
         if not self.loaded_emojis:
             await self.load_emojis()
         author = ctx.message.author
-        #maxTime = 30
+        maxTime = 5
         maxEventTime = 10
         startTime = time.time()
         timeElapsed = 0
@@ -55,7 +55,7 @@ class Fishing:
             elif randomEvent == 6:
                 emoji = await self.get_random_emoji()
                 await self.client.edit_message(message, new_content="{} casts out their line... you feel a solid bite! Quick, react with {}!".format(author.name, emoji))                                
-                res = await self.client.wait_for_reaction(emoji=emoji,user=author,timeout=10)
+                res = await self.client.wait_for_reaction(message=message, emoji=emoji,user=author,timeout=10)
                 if not res:
                     await self.client.edit_message(message, new_content="{} casts out their line... you feel a solid bite! Quick, react with {}! ... it got away".format(author.name, emoji))
                     break
